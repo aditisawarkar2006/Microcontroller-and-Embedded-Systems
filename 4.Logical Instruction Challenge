@@ -1,0 +1,21 @@
+ORG 0000H
+
+CLR A            ; A = 0000H
+
+; Build 2000
+ORL A, #07D0H    ; A = 2000
+
+; Mask lower bits (logical operation usage)
+ANL A, #0FFH     ; Logical AND (no change, but instruction used)
+
+; Add 500 logically
+ORL A, #01F4H    ; A = 2500
+
+; Mask again
+ANL A, #0FFH
+
+; Add 15 logically
+ORL A, #000FH    ; A = 2515
+
+HERE: SJMP HERE
+END
