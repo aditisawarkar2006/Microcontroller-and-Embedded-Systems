@@ -1,0 +1,43 @@
+ORG 0000H
+
+; Load numbers into NEW locations
+MOV 60H, #12H    ; 18 decimal
+MOV 61H, #13H    ; 19 decimal
+
+MOV R0, 60H      ; R0 = A (18)
+MOV R1, 61H      ; R1 = B (19)
+
+COMPARE:
+MOV A, R0
+JZ A_ZERO        ; If A == 0
+
+MOV A, R1
+JZ B_ZERO        ; If B == 0
+
+DEC R0           ; Decrement A
+DEC R1           ; Decrement B
+SJMP COMPARE
+
+A_ZERO:
+MOV A, R1
+JZ EQUAL         ; Both zero ? equal
+SJMP A_LESS      ; A < B
+
+B_ZERO:
+SJMP A_GREATER   ; A > B
+
+A_GREATER:
+MOV 62H, #01H    ; Result = 01H
+SJMP END_PROG
+
+A_LESS:
+MOV 62H, #0FFH   ; Result = FFH
+SJMP END_PROG
+
+EQUAL:
+MOV 62H, #00H    ; Result = 00H
+
+END_PROG:
+SJMP END_PROG
+
+END
