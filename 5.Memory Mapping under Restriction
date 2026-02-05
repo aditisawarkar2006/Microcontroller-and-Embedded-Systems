@@ -1,0 +1,35 @@
+ORG 0000H
+
+MOV R0, #40H     ; Read pointer ? start of range
+MOV R1, #40H     ; Write pointer ? start of range
+MOV R2, #20H     ; Counter = 32 bytes
+
+SCAN:
+MOV A, @R0       ; Read byte
+INC R0           ; Advance read pointer
+
+CJNE A, #0FFH, COPY
+SJMP NEXT        ; If FFH, skip copy
+
+COPY:
+MOV @R1, A       ; Write valid data
+INC R1           ; Advance write pointer
+
+NEXT:
+DJNZ R2, SCAN
+
+; Fill remaining locations with 00H
+FILL:
+MOV A, R1
+CJNE A, #60H, ZERO
+SJMP END_PROG
+
+ZERO:
+MOV @R1, #00H
+INC R1
+SJMP FILL
+
+END_PROG:
+SJMP END_PROG
+
+END
