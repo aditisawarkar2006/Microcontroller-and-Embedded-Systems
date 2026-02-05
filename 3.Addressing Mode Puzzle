@@ -1,0 +1,23 @@
+ORG 0000H
+
+MOV 30H, #40H    ; Pointer value
+MOV 40H, #99H    ; Actual data
+
+MOV A, 30H       ; Direct addressing
+                 ; A ? RAM[30H] = 40H
+
+HERE: SJMP HERE
+END
+
+
+ORG 0000H
+
+MOV 30H, #40H    ; Pointer value
+MOV 40H, #99H    ; Actual data
+
+MOV R0, #30H     ; Load base address
+MOV A, @R0       ; Indirect addressing
+                 ; A ? RAM[RAM[30H]] = RAM[40H] = 99H
+
+HERE: SJMP HERE
+END
