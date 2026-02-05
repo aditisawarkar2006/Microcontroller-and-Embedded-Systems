@@ -1,0 +1,16 @@
+ORG 0000H          ; Program start
+
+CLR C              ; Clear carry (important for SUBB)
+
+MOV A, #10         ; Load 10
+MOV B, #100        ; Load 100
+MUL AB             ; A = 1000
+
+ADD A, #100        ; A = 1100
+ADD A, #20         ; A = 1120
+
+SUBB A, #2         ; A = 1118
+
+HERE: SJMP HERE    ; Stop execution
+
+END
